@@ -40,6 +40,7 @@ export default class ConfirmationCodeInput extends PureComponent<Props, State> {
     ]),
     keyboardType: TextInputNative.propTypes.keyboardType,
     maskSymbol: PropTypes.string,
+    isClearOnFocus: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -60,6 +61,7 @@ export default class ConfirmationCodeInput extends PureComponent<Props, State> {
     keyboardType: 'default',
     maskSymbol: null,
     canPasteCode: false,
+    isClearOnFocus: true,
   };
 
   styles: Object;
@@ -231,6 +233,10 @@ export default class ConfirmationCodeInput extends PureComponent<Props, State> {
       this.blur(index);
 
       onFulfill(code);
+
+      if (!this.props.isClearOnFocus) {
+        this.ignoreOnFocusHandler = true;
+      }
     } else {
       // Skip processing onFocus that changes state
       this.ignoreOnFocusHandler = true;
